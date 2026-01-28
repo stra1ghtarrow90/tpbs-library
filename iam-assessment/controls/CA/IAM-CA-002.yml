@@ -1,0 +1,26 @@
+id: IAM-CA-002
+domain: CA
+title: Location and device context enforced
+objective: Reduce stolen credential abuse
+risk: External compromise
+weight: 3
+evidence:
+  sources:
+  - entra_graph
+  artifacts:
+  - named_locations
+  - device_filters
+scoring:
+  levels:
+  - score: 0
+    label: No context enforcement
+    criteria: No location or device checks
+  - score: 1
+    label: Partial context
+    criteria: Location or device enforced
+  - score: 2
+    label: Strong context enforcement
+    criteria: Location and compliant device required
+remediation:
+  quick_win: Add named locations
+  long_term: Enforce device compliance for sensitive apps

@@ -1,0 +1,862 @@
+{
+  "build": {
+    "compiled_at": "2026-01-28T16:19:26Z",
+    "compiler": "tools/compile_controls.py",
+    "registry_hash": "64cb1a2b08f33b36c16c6dad5fb66c7bd8524d7fdb7748e2ad20279f563adc40"
+  },
+  "controls": [
+    {
+      "domain": "AUTH",
+      "evidence": {
+        "artifacts": [
+          "conditional_access_policies"
+        ],
+        "sources": [
+          "entra_graph"
+        ]
+      },
+      "id": "IAM-AUTH-001",
+      "objective": "Prevent credential-only compromise",
+      "remediation": {
+        "long_term": "Adopt authentication strengths across access tiers",
+        "quick_win": "Enforce MFA via Conditional Access for all users"
+      },
+      "risk": "Account takeover",
+      "scoring": {
+        "levels": [
+          {
+            "criteria": "No policy requires MFA for the majority of users",
+            "label": "MFA not enforced",
+            "score": 0
+          },
+          {
+            "criteria": "MFA enforced but exclusions exist beyond break-glass",
+            "label": "MFA enforced with exclusions",
+            "score": 1
+          },
+          {
+            "criteria": "MFA enforced tenant-wide with minimal exclusions",
+            "label": "MFA enforced for all users and guests",
+            "score": 2
+          }
+        ]
+      },
+      "title": "MFA enforced for all users",
+      "weight": 4
+    },
+    {
+      "domain": "AUTH",
+      "evidence": {
+        "artifacts": [
+          "authentication_strengths",
+          "directory_roles"
+        ],
+        "sources": [
+          "entra_graph"
+        ]
+      },
+      "id": "IAM-AUTH-002",
+      "objective": "Protect privileged sessions from token theft",
+      "remediation": {
+        "long_term": "Enforce phishing-resistant auth via auth strengths",
+        "quick_win": "Restrict privileged roles to strong MFA"
+      },
+      "risk": "Privilege escalation",
+      "scoring": {
+        "levels": [
+          {
+            "criteria": "Push, SMS, or voice allowed for privileged access",
+            "label": "Weak MFA allowed",
+            "score": 0
+          },
+          {
+            "criteria": "Number matching or app-based MFA only",
+            "label": "Improved MFA",
+            "score": 1
+          },
+          {
+            "criteria": "FIDO2 or certificate-based auth enforced",
+            "label": "Phishing-resistant MFA enforced",
+            "score": 2
+          }
+        ]
+      },
+      "title": "Phishing-resistant MFA for privileged roles",
+      "weight": 5
+    },
+    {
+      "domain": "AUTH",
+      "evidence": {
+        "artifacts": [
+          "sign_in_logs",
+          "conditional_access_policies"
+        ],
+        "sources": [
+          "entra_graph"
+        ]
+      },
+      "id": "IAM-AUTH-003",
+      "objective": "Eliminate MFA bypass paths",
+      "remediation": {
+        "long_term": "Remove all protocol dependencies on legacy auth",
+        "quick_win": "Create CA policy blocking legacy auth"
+      },
+      "risk": "Silent compromise",
+      "scoring": {
+        "levels": [
+          {
+            "criteria": "Legacy protocols allowed tenant-wide",
+            "label": "Legacy auth enabled",
+            "score": 0
+          },
+          {
+            "criteria": "Legacy auth blocked for some users/apps",
+            "label": "Partial legacy auth blocking",
+            "score": 1
+          },
+          {
+            "criteria": "Legacy auth blocked with monitoring exceptions only",
+            "label": "Legacy auth fully blocked",
+            "score": 2
+          }
+        ]
+      },
+      "title": "Legacy authentication blocked",
+      "weight": 4
+    },
+    {
+      "domain": "AUTH",
+      "evidence": {
+        "artifacts": [
+          "authentication_strengths",
+          "conditional_access_policies"
+        ],
+        "sources": [
+          "entra_graph"
+        ]
+      },
+      "id": "IAM-AUTH-004",
+      "objective": "Match authentication assurance to access sensitivity",
+      "remediation": {
+        "long_term": "Implement risk-based auth strength strategy",
+        "quick_win": "Separate privileged vs standard auth policies"
+      },
+      "risk": "Over-trusting weak authentication",
+      "scoring": {
+        "levels": [
+          {
+            "criteria": "One MFA policy used for all access",
+            "label": "Single auth policy",
+            "score": 0
+          },
+          {
+            "criteria": "Some apps or roles use stronger auth",
+            "label": "Partial differentiation",
+            "score": 1
+          },
+          {
+            "criteria": "Auth strength mapped to access tiers",
+            "label": "Risk-aligned authentication",
+            "score": 2
+          }
+        ]
+      },
+      "title": "Authentication strength aligned to risk",
+      "weight": 3
+    },
+    {
+      "domain": "CA",
+      "evidence": {
+        "artifacts": [
+          "conditional_access_policies"
+        ],
+        "sources": [
+          "entra_graph"
+        ]
+      },
+      "id": "IAM-CA-001",
+      "objective": "Ensure all sign-ins are evaluated",
+      "remediation": {
+        "long_term": "Treat CA as default enforcement plane",
+        "quick_win": "Expand CA scope"
+      },
+      "risk": "Policy bypass",
+      "scoring": {
+        "levels": [
+          {
+            "criteria": "CA not applied tenant-wide",
+            "label": "Limited CA coverage",
+            "score": 0
+          },
+          {
+            "criteria": "Guests or apps excluded",
+            "label": "CA covers users only",
+            "score": 1
+          },
+          {
+            "criteria": "Users, guests, and apps covered",
+            "label": "CA enforced universally",
+            "score": 2
+          }
+        ]
+      },
+      "title": "Conditional Access enforced for all access",
+      "weight": 4
+    },
+    {
+      "domain": "CA",
+      "evidence": {
+        "artifacts": [
+          "named_locations",
+          "device_filters"
+        ],
+        "sources": [
+          "entra_graph"
+        ]
+      },
+      "id": "IAM-CA-002",
+      "objective": "Reduce stolen credential abuse",
+      "remediation": {
+        "long_term": "Enforce device compliance for sensitive apps",
+        "quick_win": "Add named locations"
+      },
+      "risk": "External compromise",
+      "scoring": {
+        "levels": [
+          {
+            "criteria": "No location or device checks",
+            "label": "No context enforcement",
+            "score": 0
+          },
+          {
+            "criteria": "Location or device enforced",
+            "label": "Partial context",
+            "score": 1
+          },
+          {
+            "criteria": "Location and compliant device required",
+            "label": "Strong context enforcement",
+            "score": 2
+          }
+        ]
+      },
+      "title": "Location and device context enforced",
+      "weight": 3
+    },
+    {
+      "domain": "CA",
+      "evidence": {
+        "artifacts": [
+          "identity_protection_policies"
+        ],
+        "sources": [
+          "entra_graph"
+        ]
+      },
+      "id": "IAM-CA-003",
+      "objective": "Automatically respond to identity attacks",
+      "remediation": {
+        "long_term": "Integrate with SOC workflows",
+        "quick_win": "Enable Identity Protection policies"
+      },
+      "risk": "Account takeover",
+      "scoring": {
+        "levels": [
+          {
+            "criteria": "No risk-based response",
+            "label": "Risk signals unused",
+            "score": 0
+          },
+          {
+            "criteria": "Alerts generated without enforcement",
+            "label": "Alert-only",
+            "score": 1
+          },
+          {
+            "criteria": "High-risk sign-ins blocked or reset",
+            "label": "Automated remediation",
+            "score": 2
+          }
+        ]
+      },
+      "title": "High-risk sign-ins blocked or remediated",
+      "weight": 4
+    },
+    {
+      "domain": "LCM",
+      "evidence": {
+        "artifacts": [
+          "provisioning_flows"
+        ],
+        "sources": [
+          "hr_system",
+          "entra_graph"
+        ]
+      },
+      "id": "IAM-LCM-001",
+      "objective": "Remove manual lag",
+      "remediation": {
+        "long_term": "Full lifecycle orchestration",
+        "quick_win": "Automate leaver disablement"
+      },
+      "risk": "Orphaned access",
+      "scoring": {
+        "levels": [
+          {
+            "criteria": "No automated provisioning",
+            "label": "Manual lifecycle",
+            "score": 0
+          },
+          {
+            "criteria": "Some lifecycle events automated",
+            "label": "Partial automation",
+            "score": 1
+          },
+          {
+            "criteria": "Joiner, mover, leaver automated",
+            "label": "Fully automated lifecycle",
+            "score": 2
+          }
+        ]
+      },
+      "title": "Joiner-mover-leaver automation",
+      "weight": 4
+    },
+    {
+      "domain": "LCM",
+      "evidence": {
+        "artifacts": [
+          "account_disable_logs"
+        ],
+        "sources": [
+          "entra_graph"
+        ]
+      },
+      "id": "IAM-LCM-002",
+      "objective": "Minimise post-employment risk",
+      "remediation": {
+        "long_term": "Integrate HR triggers",
+        "quick_win": "Enforce disable-on-termination"
+      },
+      "risk": "Ex-employee access",
+      "scoring": {
+        "levels": [
+          {
+            "criteria": "Leaver access removal inconsistent",
+            "label": "No SLA",
+            "score": 0
+          },
+          {
+            "criteria": "Delays common",
+            "label": "SLA defined but breached",
+            "score": 1
+          },
+          {
+            "criteria": "Access revoked within SLA",
+            "label": "SLA consistently met",
+            "score": 2
+          }
+        ]
+      },
+      "title": "Leaver access revoked within SLA",
+      "weight": 4
+    },
+    {
+      "domain": "LCM",
+      "evidence": {
+        "artifacts": [
+          "guest_policies"
+        ],
+        "sources": [
+          "entra_graph"
+        ]
+      },
+      "id": "IAM-LCM-003",
+      "objective": "Prevent eternal guest access",
+      "remediation": {
+        "long_term": "Sponsor-based access reviews",
+        "quick_win": "Enable guest expiration"
+      },
+      "risk": "External persistence",
+      "scoring": {
+        "levels": [
+          {
+            "criteria": "Guests never expire",
+            "label": "No expiry",
+            "score": 0
+          },
+          {
+            "criteria": "Periodic manual reviews",
+            "label": "Manual review",
+            "score": 1
+          },
+          {
+            "criteria": "Guests expire automatically",
+            "label": "Automatic expiry",
+            "score": 2
+          }
+        ]
+      },
+      "title": "Guest access lifecycle enforced",
+      "weight": 3
+    },
+    {
+      "domain": "LCM",
+      "evidence": {
+        "artifacts": [
+          "access_reviews"
+        ],
+        "query_hints": [
+          "Check if Access Reviews exist for privileged roles and guest users",
+          "Verify review cadence and completion rates"
+        ],
+        "sources": [
+          "entra_graph"
+        ]
+      },
+      "id": "IAM-LCM-004",
+      "lifecycle": {
+        "introduced": "2026-01-28",
+        "status": "active"
+      },
+      "objective": "Ensure access remains justified over time",
+      "remediation": {
+        "long_term": "Automate recertification and enforce removals on non-response",
+        "quick_win": "Enable access reviews for guests and privileged groups"
+      },
+      "risk": "Access creep and persistent external access",
+      "scoring": {
+        "levels": [
+          {
+            "criteria": "No scheduled access reviews for privileged or guest access",
+            "label": "No access reviews",
+            "score": 0
+          },
+          {
+            "criteria": "Access reviews exist but not covering both privileged and guests, or irregular cadence",
+            "label": "Partial access reviews",
+            "score": 1
+          },
+          {
+            "criteria": "Regular access reviews cover privileged roles and guest users with tracked completion",
+            "label": "Access reviews enforced",
+            "score": 2
+          }
+        ]
+      },
+      "title": "Access reviews for privileged and guest accounts",
+      "weight": 3
+    },
+    {
+      "domain": "MON",
+      "evidence": {
+        "artifacts": [
+          "audit_logs",
+          "sign_in_logs"
+        ],
+        "sources": [
+          "entra_graph",
+          "siem"
+        ]
+      },
+      "id": "IAM-MON-001",
+      "objective": "Enable detection and forensics",
+      "remediation": {
+        "long_term": "Correlate identity with endpoint logs",
+        "quick_win": "Enable log forwarding"
+      },
+      "risk": "Blind compromise",
+      "scoring": {
+        "levels": [
+          {
+            "criteria": "Logs not stored centrally",
+            "label": "Logs not retained",
+            "score": 0
+          },
+          {
+            "criteria": "Logs retained locally only",
+            "label": "Limited retention",
+            "score": 1
+          },
+          {
+            "criteria": "Logs forwarded and retained",
+            "label": "Central SIEM logging",
+            "score": 2
+          }
+        ]
+      },
+      "title": "Identity events centrally logged",
+      "weight": 3
+    },
+    {
+      "domain": "MON",
+      "evidence": {
+        "artifacts": [
+          "alert_rules",
+          "runbooks"
+        ],
+        "sources": [
+          "siem"
+        ]
+      },
+      "id": "IAM-MON-002",
+      "objective": "Detect abuse early",
+      "remediation": {
+        "long_term": "SOC-integrated response workflows",
+        "quick_win": "Enable built-in alerts"
+      },
+      "risk": "Undetected escalation",
+      "scoring": {
+        "levels": [
+          {
+            "criteria": "No identity alerting",
+            "label": "No alerts",
+            "score": 0
+          },
+          {
+            "criteria": "Alerts exist but no runbooks",
+            "label": "Alerts without response",
+            "score": 1
+          },
+          {
+            "criteria": "Alerts tied to response playbooks",
+            "label": "Alerts with response",
+            "score": 2
+          }
+        ]
+      },
+      "title": "Alerts on privileged and risky activity",
+      "weight": 3
+    },
+    {
+      "domain": "PRIV",
+      "evidence": {
+        "artifacts": [
+          "pim_assignments"
+        ],
+        "sources": [
+          "entra_graph"
+        ]
+      },
+      "id": "IAM-PRIV-001",
+      "objective": "Reduce standing access",
+      "remediation": {
+        "long_term": "Enforce just-in-time admin access",
+        "quick_win": "Convert permanent roles to PIM"
+      },
+      "risk": "Persistent compromise",
+      "scoring": {
+        "levels": [
+          {
+            "criteria": "Standing privileged assignments exist",
+            "label": "Permanent admins",
+            "score": 0
+          },
+          {
+            "criteria": "Some roles eligible, others permanent",
+            "label": "Mixed model",
+            "score": 1
+          },
+          {
+            "criteria": "All privileged roles are eligible only",
+            "label": "Fully time-bound",
+            "score": 2
+          }
+        ]
+      },
+      "title": "Privileged roles are time-bound",
+      "weight": 5
+    },
+    {
+      "domain": "PRIV",
+      "evidence": {
+        "artifacts": [
+          "pim_settings"
+        ],
+        "sources": [
+          "entra_graph"
+        ]
+      },
+      "id": "IAM-PRIV-002",
+      "objective": "Prevent role hijacking",
+      "remediation": {
+        "long_term": "Enforce phishing-resistant MFA on activation",
+        "quick_win": "Enable MFA for PIM"
+      },
+      "risk": "Privilege abuse",
+      "scoring": {
+        "levels": [
+          {
+            "criteria": "Privilege activation without MFA",
+            "label": "No MFA on activation",
+            "score": 0
+          },
+          {
+            "criteria": "MFA optional for some roles",
+            "label": "Optional MFA",
+            "score": 1
+          },
+          {
+            "criteria": "MFA required for all activations",
+            "label": "Mandatory MFA",
+            "score": 2
+          }
+        ]
+      },
+      "title": "MFA required for privilege activation",
+      "weight": 4
+    },
+    {
+      "domain": "PRIV",
+      "evidence": {
+        "artifacts": [
+          "pim_approvals"
+        ],
+        "sources": [
+          "entra_graph"
+        ]
+      },
+      "id": "IAM-PRIV-003",
+      "objective": "Introduce human oversight",
+      "remediation": {
+        "long_term": "Tiered approval model",
+        "quick_win": "Enable approvals for Global Admin"
+      },
+      "risk": "Insider misuse",
+      "scoring": {
+        "levels": [
+          {
+            "criteria": "Self-approval or auto-approval",
+            "label": "No approvals",
+            "score": 0
+          },
+          {
+            "criteria": "Approvals required for some roles",
+            "label": "Partial approvals",
+            "score": 1
+          },
+          {
+            "criteria": "All high-risk roles require approval",
+            "label": "Full approval enforcement",
+            "score": 2
+          }
+        ]
+      },
+      "title": "Privileged role approvals enforced",
+      "weight": 3
+    },
+    {
+      "domain": "PRIV",
+      "evidence": {
+        "artifacts": [
+          "break_glass_accounts",
+          "sign_in_logs"
+        ],
+        "sources": [
+          "entra_graph"
+        ]
+      },
+      "id": "IAM-PRIV-004",
+      "objective": "Ensure emergency access without abuse",
+      "remediation": {
+        "long_term": "Automate break-glass testing",
+        "quick_win": "Create two emergency accounts"
+      },
+      "risk": "Lockout or misuse",
+      "scoring": {
+        "levels": [
+          {
+            "criteria": "No emergency access accounts",
+            "label": "No break-glass",
+            "score": 0
+          },
+          {
+            "criteria": "Exists but not monitored or tested",
+            "label": "Weak or untested",
+            "score": 1
+          },
+          {
+            "criteria": "Monitored, tested, excluded safely",
+            "label": "Secured and tested",
+            "score": 2
+          }
+        ]
+      },
+      "title": "Break-glass accounts secured and tested",
+      "weight": 3
+    },
+    {
+      "domain": "WORK",
+      "evidence": {
+        "artifacts": [
+          "app_registrations"
+        ],
+        "sources": [
+          "entra_graph"
+        ]
+      },
+      "id": "IAM-WORK-001",
+      "objective": "Eliminate static secrets",
+      "remediation": {
+        "long_term": "Enforce secretless architecture",
+        "quick_win": "Replace secrets with MI"
+      },
+      "risk": "Credential leakage",
+      "scoring": {
+        "levels": [
+          {
+            "criteria": "Static secrets widely used",
+            "label": "Secrets everywhere",
+            "score": 0
+          },
+          {
+            "criteria": "Some managed identities in use",
+            "label": "Mixed approach",
+            "score": 1
+          },
+          {
+            "criteria": "No long-lived secrets",
+            "label": "Managed identities only",
+            "score": 2
+          }
+        ]
+      },
+      "title": "Workloads use managed identities",
+      "weight": 5
+    },
+    {
+      "domain": "WORK",
+      "evidence": {
+        "artifacts": [
+          "credential_expiry"
+        ],
+        "sources": [
+          "entra_graph"
+        ]
+      },
+      "id": "IAM-WORK-002",
+      "objective": "Reduce blast radius",
+      "remediation": {
+        "long_term": "Automated credential rotation",
+        "quick_win": "Shorten secret lifetime"
+      },
+      "risk": "Long-lived compromise",
+      "scoring": {
+        "levels": [
+          {
+            "criteria": "Secrets never rotated",
+            "label": "No rotation",
+            "score": 0
+          },
+          {
+            "criteria": "Rotation manual or ad-hoc",
+            "label": "Manual rotation",
+            "score": 1
+          },
+          {
+            "criteria": "Rotation automated and enforced",
+            "label": "Automated rotation",
+            "score": 2
+          }
+        ]
+      },
+      "title": "Secrets and certificates rotated automatically",
+      "weight": 3
+    },
+    {
+      "domain": "WORK",
+      "evidence": {
+        "artifacts": [
+          "app_role_assignments"
+        ],
+        "sources": [
+          "entra_graph"
+        ]
+      },
+      "id": "IAM-WORK-003",
+      "objective": "Limit service blast radius",
+      "remediation": {
+        "long_term": "Permission reviews as code",
+        "quick_win": "Audit app permissions"
+      },
+      "risk": "Lateral movement",
+      "scoring": {
+        "levels": [
+          {
+            "criteria": "Broad directory permissions",
+            "label": "Over-permissioned",
+            "score": 0
+          },
+          {
+            "criteria": "Some excessive permissions",
+            "label": "Partially scoped",
+            "score": 1
+          },
+          {
+            "criteria": "Minimal required permissions only",
+            "label": "Least privilege",
+            "score": 2
+          }
+        ]
+      },
+      "title": "Workload permissions are least-privilege",
+      "weight": 4
+    }
+  ],
+  "counts": {
+    "controls": 20,
+    "domains": 6
+  },
+  "domains": [
+    {
+      "description": "Authentication methods and assurance levels",
+      "id": "AUTH",
+      "name": "Authentication Strength"
+    },
+    {
+      "description": "Context-based access enforcement",
+      "id": "CA",
+      "name": "Conditional Access"
+    },
+    {
+      "description": "Administrative access and elevation",
+      "id": "PRIV",
+      "name": "Privileged Access"
+    },
+    {
+      "description": "Joiner, mover, leaver controls",
+      "id": "LCM",
+      "name": "Identity Lifecycle"
+    },
+    {
+      "description": "Non-human identities and permissions",
+      "id": "WORK",
+      "name": "Workload Identity"
+    },
+    {
+      "description": "Identity logging and response",
+      "id": "MON",
+      "name": "Monitoring & Detection"
+    }
+  ],
+  "meta": {
+    "owner": "iam-architecture",
+    "updated": "2026-01-28",
+    "version": 1
+  },
+  "scoring": {
+    "levels_required": [
+      0,
+      1,
+      2
+    ],
+    "scale": {
+      "max": 2,
+      "min": 0
+    },
+    "weight": {
+      "max": 5,
+      "min": 1
+    }
+  }
+}

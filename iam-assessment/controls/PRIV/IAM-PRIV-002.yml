@@ -1,0 +1,25 @@
+id: IAM-PRIV-002
+domain: PRIV
+title: MFA required for privilege activation
+objective: Prevent role hijacking
+risk: Privilege abuse
+weight: 4
+evidence:
+  sources:
+  - entra_graph
+  artifacts:
+  - pim_settings
+scoring:
+  levels:
+  - score: 0
+    label: No MFA on activation
+    criteria: Privilege activation without MFA
+  - score: 1
+    label: Optional MFA
+    criteria: MFA optional for some roles
+  - score: 2
+    label: Mandatory MFA
+    criteria: MFA required for all activations
+remediation:
+  quick_win: Enable MFA for PIM
+  long_term: Enforce phishing-resistant MFA on activation

@@ -1,0 +1,26 @@
+id: IAM-PRIV-004
+domain: PRIV
+title: Break-glass accounts secured and tested
+objective: Ensure emergency access without abuse
+risk: Lockout or misuse
+weight: 3
+evidence:
+  sources:
+  - entra_graph
+  artifacts:
+  - break_glass_accounts
+  - sign_in_logs
+scoring:
+  levels:
+  - score: 0
+    label: No break-glass
+    criteria: No emergency access accounts
+  - score: 1
+    label: Weak or untested
+    criteria: Exists but not monitored or tested
+  - score: 2
+    label: Secured and tested
+    criteria: Monitored, tested, excluded safely
+remediation:
+  quick_win: Create two emergency accounts
+  long_term: Automate break-glass testing

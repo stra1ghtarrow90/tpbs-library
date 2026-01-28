@@ -1,0 +1,25 @@
+id: IAM-WORK-002
+domain: WORK
+title: Secrets and certificates rotated automatically
+objective: Reduce blast radius
+risk: Long-lived compromise
+weight: 3
+evidence:
+  sources:
+  - entra_graph
+  artifacts:
+  - credential_expiry
+scoring:
+  levels:
+  - score: 0
+    label: No rotation
+    criteria: Secrets never rotated
+  - score: 1
+    label: Manual rotation
+    criteria: Rotation manual or ad-hoc
+  - score: 2
+    label: Automated rotation
+    criteria: Rotation automated and enforced
+remediation:
+  quick_win: Shorten secret lifetime
+  long_term: Automated credential rotation

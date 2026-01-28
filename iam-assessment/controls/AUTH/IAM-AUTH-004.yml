@@ -1,0 +1,26 @@
+id: IAM-AUTH-004
+domain: AUTH
+title: Authentication strength aligned to risk
+objective: Match authentication assurance to access sensitivity
+risk: Over-trusting weak authentication
+weight: 3
+evidence:
+  sources:
+  - entra_graph
+  artifacts:
+  - authentication_strengths
+  - conditional_access_policies
+scoring:
+  levels:
+  - score: 0
+    label: Single auth policy
+    criteria: One MFA policy used for all access
+  - score: 1
+    label: Partial differentiation
+    criteria: Some apps or roles use stronger auth
+  - score: 2
+    label: Risk-aligned authentication
+    criteria: Auth strength mapped to access tiers
+remediation:
+  quick_win: Separate privileged vs standard auth policies
+  long_term: Implement risk-based auth strength strategy

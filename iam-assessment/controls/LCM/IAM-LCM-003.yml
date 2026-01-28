@@ -1,0 +1,25 @@
+id: IAM-LCM-003
+domain: LCM
+title: Guest access lifecycle enforced
+objective: Prevent eternal guest access
+risk: External persistence
+weight: 3
+evidence:
+  sources:
+  - entra_graph
+  artifacts:
+  - guest_policies
+scoring:
+  levels:
+  - score: 0
+    label: No expiry
+    criteria: Guests never expire
+  - score: 1
+    label: Manual review
+    criteria: Periodic manual reviews
+  - score: 2
+    label: Automatic expiry
+    criteria: Guests expire automatically
+remediation:
+  quick_win: Enable guest expiration
+  long_term: Sponsor-based access reviews

@@ -1,0 +1,25 @@
+id: IAM-WORK-003
+domain: WORK
+title: Workload permissions are least-privilege
+objective: Limit service blast radius
+risk: Lateral movement
+weight: 4
+evidence:
+  sources:
+  - entra_graph
+  artifacts:
+  - app_role_assignments
+scoring:
+  levels:
+  - score: 0
+    label: Over-permissioned
+    criteria: Broad directory permissions
+  - score: 1
+    label: Partially scoped
+    criteria: Some excessive permissions
+  - score: 2
+    label: Least privilege
+    criteria: Minimal required permissions only
+remediation:
+  quick_win: Audit app permissions
+  long_term: Permission reviews as code

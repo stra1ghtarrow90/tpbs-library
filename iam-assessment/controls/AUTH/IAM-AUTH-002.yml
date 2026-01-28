@@ -1,0 +1,26 @@
+id: IAM-AUTH-002
+domain: AUTH
+title: Phishing-resistant MFA for privileged roles
+objective: Protect privileged sessions from token theft
+risk: Privilege escalation
+weight: 5
+evidence:
+  sources:
+  - entra_graph
+  artifacts:
+  - authentication_strengths
+  - directory_roles
+scoring:
+  levels:
+  - score: 0
+    label: Weak MFA allowed
+    criteria: Push, SMS, or voice allowed for privileged access
+  - score: 1
+    label: Improved MFA
+    criteria: Number matching or app-based MFA only
+  - score: 2
+    label: Phishing-resistant MFA enforced
+    criteria: FIDO2 or certificate-based auth enforced
+remediation:
+  quick_win: Restrict privileged roles to strong MFA
+  long_term: Enforce phishing-resistant auth via auth strengths

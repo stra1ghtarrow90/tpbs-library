@@ -1,0 +1,27 @@
+id: IAM-MON-001
+domain: MON
+title: Identity events centrally logged
+objective: Enable detection and forensics
+risk: Blind compromise
+weight: 3
+evidence:
+  sources:
+  - entra_graph
+  - siem
+  artifacts:
+  - audit_logs
+  - sign_in_logs
+scoring:
+  levels:
+  - score: 0
+    label: Logs not retained
+    criteria: Logs not stored centrally
+  - score: 1
+    label: Limited retention
+    criteria: Logs retained locally only
+  - score: 2
+    label: Central SIEM logging
+    criteria: Logs forwarded and retained
+remediation:
+  quick_win: Enable log forwarding
+  long_term: Correlate identity with endpoint logs

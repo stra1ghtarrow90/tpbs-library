@@ -1,0 +1,25 @@
+id: IAM-CA-003
+domain: CA
+title: High-risk sign-ins blocked or remediated
+objective: Automatically respond to identity attacks
+risk: Account takeover
+weight: 4
+evidence:
+  sources:
+  - entra_graph
+  artifacts:
+  - identity_protection_policies
+scoring:
+  levels:
+  - score: 0
+    label: Risk signals unused
+    criteria: No risk-based response
+  - score: 1
+    label: Alert-only
+    criteria: Alerts generated without enforcement
+  - score: 2
+    label: Automated remediation
+    criteria: High-risk sign-ins blocked or reset
+remediation:
+  quick_win: Enable Identity Protection policies
+  long_term: Integrate with SOC workflows

@@ -1,0 +1,39 @@
+id: IAM-LCM-004
+domain: LCM
+title: Access reviews for privileged and guest accounts
+
+objective: Ensure access remains justified over time
+risk: Access creep and persistent external access
+
+weight: 3
+
+evidence:
+  sources:
+    - entra_graph
+  artifacts:
+    - access_reviews
+  query_hints:
+    - "Check if Access Reviews exist for privileged roles and guest users"
+    - "Verify review cadence and completion rates"
+
+scoring:
+  levels:
+    - score: 0
+      label: No access reviews
+      criteria: No scheduled access reviews for privileged or guest access
+
+    - score: 1
+      label: Partial access reviews
+      criteria: Access reviews exist but not covering both privileged and guests, or irregular cadence
+
+    - score: 2
+      label: Access reviews enforced
+      criteria: Regular access reviews cover privileged roles and guest users with tracked completion
+
+remediation:
+  quick_win: Enable access reviews for guests and privileged groups
+  long_term: Automate recertification and enforce removals on non-response
+
+lifecycle:
+  status: active
+  introduced: "2026-01-28"

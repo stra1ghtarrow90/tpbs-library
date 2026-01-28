@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/schemas/control.schema.json",
+  "title": "IAM Control",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "domain",
+    "title",
+    "objective",
+    "risk",
+    "weight",
+    "evidence",
+    "scoring",
+    "remediation"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^IAM-[A-Z]+-[0-9]{3}$"
+    },
+    "domain": {
+      "type": "string",
+      "pattern": "^[A-Z]{2,10}$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 5
+    },
+    "objective": {
+      "type": "string",
+      "minLength": 5
+    },
+    "risk": {
+      "type": "string",
+      "minLength": 3
+    },
+    "weight": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sources", "artifacts"],
+      "properties": {
+        "sources": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "artifacts": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "query_hints": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": []
+        }
+      }
+    },
+    "scoring": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["levels"],
+      "properties": {
+        "levels": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["score", "label", "criteria"],
+            "properties": {
+              "score": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 2
+              },
+              "label": {
+                "type": "string",
+                "minLength": 3
+              },
+              "criteria": {
+                "type": "string",
+                "minLength": 3
+              }
+            }
+          }
+        }
+      }
+    },
+    "remediation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["quick_win", "long_term"],
+      "properties": {
+        "quick_win": {
+          "type": "string",
+          "minLength": 3
+        },
+        "long_term": {
+          "type": "string",
+          "minLength": 3
+        }
+      }
+    },
+    "lifecycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["active", "deprecated", "draft"]
+        },
+        "introduced": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "deprecated_on": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        }
+      }
+    }
+  }
+}

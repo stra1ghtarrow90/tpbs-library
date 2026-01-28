@@ -1,0 +1,25 @@
+id: IAM-WORK-001
+domain: WORK
+title: Workloads use managed identities
+objective: Eliminate static secrets
+risk: Credential leakage
+weight: 5
+evidence:
+  sources:
+  - entra_graph
+  artifacts:
+  - app_registrations
+scoring:
+  levels:
+  - score: 0
+    label: Secrets everywhere
+    criteria: Static secrets widely used
+  - score: 1
+    label: Mixed approach
+    criteria: Some managed identities in use
+  - score: 2
+    label: Managed identities only
+    criteria: No long-lived secrets
+remediation:
+  quick_win: Replace secrets with MI
+  long_term: Enforce secretless architecture

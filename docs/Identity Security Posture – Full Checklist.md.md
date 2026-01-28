@@ -276,7 +276,7 @@ Score each domain 0–10:
 
 ---
 
-## Executive Truth (the bit most miss)
+## Executive Truth
 
 > **If an attacker compromises AD, they can reach Entra.
 > If they compromise Entra, they can often pivot to AD.

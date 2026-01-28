@@ -1,0 +1,25 @@
+id: IAM-PRIV-003
+domain: PRIV
+title: Privileged role approvals enforced
+objective: Introduce human oversight
+risk: Insider misuse
+weight: 3
+evidence:
+  sources:
+  - entra_graph
+  artifacts:
+  - pim_approvals
+scoring:
+  levels:
+  - score: 0
+    label: No approvals
+    criteria: Self-approval or auto-approval
+  - score: 1
+    label: Partial approvals
+    criteria: Approvals required for some roles
+  - score: 2
+    label: Full approval enforcement
+    criteria: All high-risk roles require approval
+remediation:
+  quick_win: Enable approvals for Global Admin
+  long_term: Tiered approval model

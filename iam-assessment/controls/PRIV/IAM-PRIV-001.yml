@@ -1,0 +1,25 @@
+id: IAM-PRIV-001
+domain: PRIV
+title: Privileged roles are time-bound
+objective: Reduce standing access
+risk: Persistent compromise
+weight: 5
+evidence:
+  sources:
+  - entra_graph
+  artifacts:
+  - pim_assignments
+scoring:
+  levels:
+  - score: 0
+    label: Permanent admins
+    criteria: Standing privileged assignments exist
+  - score: 1
+    label: Mixed model
+    criteria: Some roles eligible, others permanent
+  - score: 2
+    label: Fully time-bound
+    criteria: All privileged roles are eligible only
+remediation:
+  quick_win: Convert permanent roles to PIM
+  long_term: Enforce just-in-time admin access

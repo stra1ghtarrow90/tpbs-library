@@ -1,0 +1,26 @@
+id: IAM-LCM-001
+domain: LCM
+title: Joiner-mover-leaver automation
+objective: Remove manual lag
+risk: Orphaned access
+weight: 4
+evidence:
+  sources:
+  - hr_system
+  - entra_graph
+  artifacts:
+  - provisioning_flows
+scoring:
+  levels:
+  - score: 0
+    label: Manual lifecycle
+    criteria: No automated provisioning
+  - score: 1
+    label: Partial automation
+    criteria: Some lifecycle events automated
+  - score: 2
+    label: Fully automated lifecycle
+    criteria: Joiner, mover, leaver automated
+remediation:
+  quick_win: Automate leaver disablement
+  long_term: Full lifecycle orchestration

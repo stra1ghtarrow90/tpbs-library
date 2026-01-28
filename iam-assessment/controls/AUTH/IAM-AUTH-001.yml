@@ -1,0 +1,25 @@
+id: IAM-AUTH-001
+domain: AUTH
+title: MFA enforced for all users
+objective: Prevent credential-only compromise
+risk: Account takeover
+weight: 4
+evidence:
+  sources:
+  - entra_graph
+  artifacts:
+  - conditional_access_policies
+scoring:
+  levels:
+  - score: 0
+    label: MFA not enforced
+    criteria: No policy requires MFA for the majority of users
+  - score: 1
+    label: MFA enforced with exclusions
+    criteria: MFA enforced but exclusions exist beyond break-glass
+  - score: 2
+    label: MFA enforced for all users and guests
+    criteria: MFA enforced tenant-wide with minimal exclusions
+remediation:
+  quick_win: Enforce MFA via Conditional Access for all users
+  long_term: Adopt authentication strengths across access tiers

@@ -1,0 +1,26 @@
+id: IAM-AUTH-003
+domain: AUTH
+title: Legacy authentication blocked
+objective: Eliminate MFA bypass paths
+risk: Silent compromise
+weight: 4
+evidence:
+  sources:
+  - entra_graph
+  artifacts:
+  - sign_in_logs
+  - conditional_access_policies
+scoring:
+  levels:
+  - score: 0
+    label: Legacy auth enabled
+    criteria: Legacy protocols allowed tenant-wide
+  - score: 1
+    label: Partial legacy auth blocking
+    criteria: Legacy auth blocked for some users/apps
+  - score: 2
+    label: Legacy auth fully blocked
+    criteria: Legacy auth blocked with monitoring exceptions only
+remediation:
+  quick_win: Create CA policy blocking legacy auth
+  long_term: Remove all protocol dependencies on legacy auth

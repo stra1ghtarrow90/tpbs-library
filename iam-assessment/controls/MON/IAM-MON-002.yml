@@ -1,0 +1,26 @@
+id: IAM-MON-002
+domain: MON
+title: Alerts on privileged and risky activity
+objective: Detect abuse early
+risk: Undetected escalation
+weight: 3
+evidence:
+  sources:
+  - siem
+  artifacts:
+  - alert_rules
+  - runbooks
+scoring:
+  levels:
+  - score: 0
+    label: No alerts
+    criteria: No identity alerting
+  - score: 1
+    label: Alerts without response
+    criteria: Alerts exist but no runbooks
+  - score: 2
+    label: Alerts with response
+    criteria: Alerts tied to response playbooks
+remediation:
+  quick_win: Enable built-in alerts
+  long_term: SOC-integrated response workflows

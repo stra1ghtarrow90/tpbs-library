@@ -1,0 +1,19 @@
+domains:
+- id: AUTH
+  name: Authentication Strength
+  description: Authentication methods and assurance levels
+- id: CA
+  name: Conditional Access
+  description: Context-based access enforcement
+- id: PRIV
+  name: Privileged Access
+  description: Administrative access and elevation
+- id: LCM
+  name: Identity Lifecycle
+  description: Joiner, mover, leaver controls
+- id: WORK
+  name: Workload Identity
+  description: Non-human identities and permissions
+- id: MON
+  name: Monitoring & Detection
+  description: Identity logging and response

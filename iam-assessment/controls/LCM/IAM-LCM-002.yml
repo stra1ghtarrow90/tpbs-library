@@ -1,0 +1,25 @@
+id: IAM-LCM-002
+domain: LCM
+title: Leaver access revoked within SLA
+objective: Minimise post-employment risk
+risk: Ex-employee access
+weight: 4
+evidence:
+  sources:
+  - entra_graph
+  artifacts:
+  - account_disable_logs
+scoring:
+  levels:
+  - score: 0
+    label: No SLA
+    criteria: Leaver access removal inconsistent
+  - score: 1
+    label: SLA defined but breached
+    criteria: Delays common
+  - score: 2
+    label: SLA consistently met
+    criteria: Access revoked within SLA
+remediation:
+  quick_win: Enforce disable-on-termination
+  long_term: Integrate HR triggers

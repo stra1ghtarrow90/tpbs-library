@@ -1,0 +1,25 @@
+id: IAM-CA-001
+domain: CA
+title: Conditional Access enforced for all access
+objective: Ensure all sign-ins are evaluated
+risk: Policy bypass
+weight: 4
+evidence:
+  sources:
+  - entra_graph
+  artifacts:
+  - conditional_access_policies
+scoring:
+  levels:
+  - score: 0
+    label: Limited CA coverage
+    criteria: CA not applied tenant-wide
+  - score: 1
+    label: CA covers users only
+    criteria: Guests or apps excluded
+  - score: 2
+    label: CA enforced universally
+    criteria: Users, guests, and apps covered
+remediation:
+  quick_win: Expand CA scope
+  long_term: Treat CA as default enforcement plane
