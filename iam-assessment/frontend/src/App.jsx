@@ -9,6 +9,15 @@ import {
 import "./styles.css";
 
 const STORAGE_KEY = "iamAssessmentId";
+const HOME_ROUTE = "/";
+const ASSESSOR_ROUTE = "/iam-assessor";
+const KNOWLEDGE_ROUTE = "/knowledge-base";
+
+function getRoute() {
+  const hash = window.location.hash.replace("#", "");
+  if (!hash || hash === "/") return HOME_ROUTE;
+  return hash.startsWith("/") ? hash : `/${hash}`;
+}
 
 function groupByDomain(items) {
   return items.reduce((acc, item) => {
@@ -19,6 +28,7 @@ function groupByDomain(items) {
 }
 
 export default function App() {
+  const [route, setRoute] = useState(() => getRoute());
   const [assessment, setAssessment] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -26,6 +36,15 @@ export default function App() {
   const [report, setReport] = useState(null);
 
   useEffect(() => {
+    function handleHashChange() {
+      setRoute(getRoute());
+    }
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
+
+  useEffect(() => {
+    if (route !== ASSESSOR_ROUTE) return;
     async function init() {
       try {
         setLoading(true);
@@ -56,7 +75,7 @@ export default function App() {
       }
     }
     init();
-  }, []);
+  }, [route]);
 
   const grouped = useMemo(() => {
     if (!assessment) return {};
@@ -109,6 +128,115 @@ export default function App() {
     }
   }
 
+  if (route === KNOWLEDGE_ROUTE) {
+    return (
+      <div className="page home">
+        <div className="nav">
+          <a className="ghost-link" href={`#${HOME_ROUTE}`}>
+            ← Back to index
+          </a>
+        </div>
+        <section className="kb-hero">
+          <div>
+            <p className="eyebrow">Knowledge Base</p>
+            <h1>Identity Architecture Library</h1>
+            <p className="lede">
+              Build out frameworks, reference patterns, and remediation guidance
+              in a single place.
+            </p>
+          </div>
+          <div className="kb-panel">
+            <h2>Coming Soon</h2>
+            <p>
+              This section will host architecture patterns, control narratives,
+              and reusable guidance for IAM and broader security domains.
+            </p>
+            <a className="primary" href={`#${ASSESSOR_ROUTE}`}>
+              Jump to IAM Assessor
+            </a>
+          </div>
+        </section>
+        <section className="home-grid">
+          <div className="home-panel">
+            <h3>Frameworks</h3>
+            <p>
+              Map IAM controls to business capabilities, technology layers, and
+              operating models.
+            </p>
+          </div>
+          <div className="home-panel">
+            <h3>Reference Patterns</h3>
+            <p>
+              Capture proven architectures for workforce, privileged access,
+              and cloud identity.
+            </p>
+          </div>
+          <div className="home-panel">
+            <h3>Remediation Playbooks</h3>
+            <p>
+              Record mitigations, owners, and execution guidance tied to the
+              IAM assessment results.
+            </p>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
+  if (route !== ASSESSOR_ROUTE) {
+    return (
+      <div className="page home">
+        <header className="home-hero">
+          <div>
+            <p className="eyebrow">TPBS Security Architecture Studio</p>
+            <h1>Identity Security Architecture Hub</h1>
+            <p className="lede">
+              Build, assess, and publish identity security posture programs with
+              structured controls, scoring, and evidence.
+            </p>
+          </div>
+          <div className="hero-card">
+            <h2>IAM Assessor</h2>
+            <p>
+              Run a structured control-by-control assessment and generate a
+              snapshot report.
+            </p>
+            <a className="primary" href={`#${ASSESSOR_ROUTE}`}>
+              Launch IAM Assessor
+            </a>
+          </div>
+        </header>
+
+        <section className="home-grid">
+          <div className="home-panel">
+            <h3>Assessment Framework</h3>
+            <p>
+              Map identity domains, control objectives, and evidence artifacts
+              into a repeatable security architecture practice.
+            </p>
+          </div>
+          <div className="home-panel">
+            <h3>Knowledge Base</h3>
+            <p>
+              Capture findings, risks, and remediation guidance to evolve toward
+              a full security architecture reference library.
+            </p>
+            <a className="ghost-link" href={`#${KNOWLEDGE_ROUTE}`}>
+              View knowledge base →
+            </a>
+          </div>
+          <div className="home-panel">
+            <h3>Program Metrics</h3>
+            <p>
+              Track assessed controls, weightings, and report-ready summaries to
+              align leadership and delivery teams.
+            </p>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
   if (loading) {
     return <div className="page">Loading checklist…</div>;
   }
@@ -131,6 +259,11 @@ export default function App() {
 
   return (
     <div className="page">
+      <div className="nav">
+        <a className="ghost-link" href={`#${HOME_ROUTE}`}>
+          ← Back to index
+        </a>
+      </div>
       <header className="header">
         <div>
           <h1>{assessment.name}</h1>
