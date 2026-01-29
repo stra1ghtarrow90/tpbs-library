@@ -3,6 +3,7 @@ from typing import Any
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+import os
 from sqlalchemy import select
 
 from .db import SessionLocal, engine, Base
@@ -21,10 +22,14 @@ from .reporting import build_report
 
 app = FastAPI(title="IAM Assessment Engine")
 
+cors_origins = os.getenv("CORS_ORIGINS", "*")
+origins_list = [o.strip() for o in cors_origins.split(",") if o.strip()]
+allow_credentials = False if origins_list == ["*"] else True
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
+    allow_origins=origins_list,
+    allow_credentials=allow_credentials,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -211,4 +216,3 @@ def _assessment_out(session: Any, assessment_id: str) -> AssessmentOut:
         scope=assessment.scope,
         items=[_item_out(item) for item in items],
     )
-
