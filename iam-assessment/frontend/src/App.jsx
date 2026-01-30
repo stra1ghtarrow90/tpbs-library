@@ -139,17 +139,17 @@ export default function App() {
         <section className="kb-hero">
           <div>
             <p className="eyebrow">Knowledge Base</p>
-            <h1>Identity Architecture Library</h1>
+            <h1>Security Architecture Library</h1>
             <p className="lede">
-              Build out frameworks, reference patterns, and remediation guidance
-              in a single place.
+              Build frameworks, reference patterns, and remediation guidance
+              across security domains in a single place.
             </p>
           </div>
           <div className="kb-panel">
             <h2>Coming Soon</h2>
             <p>
               This section will host architecture patterns, control narratives,
-              and reusable guidance for IAM and broader security domains.
+              and reusable guidance for IAM, Zero Trust, and adjacent domains.
             </p>
             <a className="primary" href={`#${ASSESSOR_ROUTE}`}>
               Jump to IAM Assessor
@@ -160,22 +160,22 @@ export default function App() {
           <div className="home-panel">
             <h3>Frameworks</h3>
             <p>
-              Map IAM controls to business capabilities, technology layers, and
-              operating models.
+              Map security controls to business capabilities, technology layers,
+              and operating models.
             </p>
           </div>
           <div className="home-panel">
             <h3>Reference Patterns</h3>
             <p>
-              Capture proven architectures for workforce, privileged access,
-              and cloud identity.
+              Capture proven architectures for zero trust, identity, cloud, and
+              data security.
             </p>
           </div>
           <div className="home-panel">
             <h3>Remediation Playbooks</h3>
             <p>
-              Record mitigations, owners, and execution guidance tied to the
-              IAM assessment results.
+              Record mitigations, owners, and execution guidance tied to
+              assessment results across domains.
             </p>
           </div>
         </section>
@@ -189,10 +189,11 @@ export default function App() {
         <header className="home-hero">
           <div>
             <p className="eyebrow">TPBS Security Architecture Studio</p>
-            <h1>Identity Security Architecture Hub</h1>
+            <h1>Security Architecture Program Hub</h1>
             <p className="lede">
-              Build, assess, and publish identity security posture programs with
-              structured controls, scoring, and evidence.
+              Build, assess, and publish security architecture posture programs
+              spanning IAM, Zero Trust, and adjacent domains with structured
+              controls, scoring, and evidence.
             </p>
           </div>
           <div className="hero-card">
@@ -209,10 +210,10 @@ export default function App() {
 
         <section className="home-grid">
           <div className="home-panel">
-            <h3>Assessment Framework</h3>
+            <h3>Assessment Frameworks</h3>
             <p>
-              Map identity domains, control objectives, and evidence artifacts
-              into a repeatable security architecture practice.
+              Map IAM, Zero Trust, cloud, and data security domains to control
+              objectives and evidence artifacts for a repeatable practice.
             </p>
           </div>
           <div className="home-panel">
@@ -229,7 +230,7 @@ export default function App() {
             <h3>Program Metrics</h3>
             <p>
               Track assessed controls, weightings, and report-ready summaries to
-              align leadership and delivery teams.
+              align leadership and delivery teams across security domains.
             </p>
           </div>
         </section>
